@@ -34,16 +34,19 @@ Version: 0.1.0
 Authors: sharkLoc <mmtinfo@163.com>
 Source code: https://github.com/sharkLoc/nemo.git
 
-
 Usage: nemo [OPTIONS] [FILE]
 
-Options:
-  -r, --html <str>  Specify the output HTML report file name [default: report.html]
-  -h, --help        Print help
-  -V, --version     Print version
-
-Global Arguments:
+Arguments:
   [FILE]  Input long reads sequence data, or read data from stdin
+
+Options:
+  -r, --html <FILE>           Specify the output HTML report file name [default: report.html]
+      --log <FILE>            If file name specified, write log message to this file, or write to stderr
+      --compress-level <INT>  Set compression level 1 (compress faster) - 9 (compress better) for gzip/bzip2/xz output file [default: 6]
+  -v, --verbosity...          Control verbosity of logging, [-v: Error, -vv: Warn, -vvv: Info, -vvvv: Debug, -vvvvv: Trace, defalut: Debug]
+  -q, --quiet                 Be quiet and do not show any extra information
+  -h, --help                  prints help information
+  -V, --version               prints version information
 
 Use "nemo --help" for more information
 ```
