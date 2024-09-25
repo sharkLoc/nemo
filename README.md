@@ -48,4 +48,7 @@ Global Arguments:
 Use "nemo --help" for more information
 ```
 
+#### report page view
+![](example/report.jpeg)
+
 #### ** any bugs please report issues **💖
