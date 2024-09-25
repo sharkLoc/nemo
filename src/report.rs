@@ -42,13 +42,14 @@ pub fn summary(
     let time_string = now.format("%Y-%m-%d %H:%M:%S").to_string();
     let report = Report {
         version: String::from(VERSION),
-        report_time: String::from(time_string),
+        report_time: time_string,
         basic_statistics: tb1_div, 
         read_length_hist: length_plot_div, 
-        per_read_gc:  gc_plot_div,
+        per_read_gc: gc_plot_div,
         cmd: cmd_txt,
     };
-    writer.write(report.to_string().as_bytes())?;
+    writer.write_all(report.to_string().as_bytes())?;
+    writer.flush()?;
     
     Ok(())
 }

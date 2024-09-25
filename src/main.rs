@@ -13,6 +13,7 @@ use report::summary;
 fn main() -> Result<(), NemoError>{
     let cmd = Args::parse();
     let cmd_txt = get_cmd(cmd.clone());
+    
     match cmd {
         Args {input, html, } => {
             let (content, length_hash, gc_hash )= statfq(input)?;

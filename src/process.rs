@@ -88,7 +88,7 @@ pub fn statfq(
         let gc_count = rec
             .seq()
             .iter()
-            .filter(|x| *x == &b'G'|| *x == &b'G')
+            .filter(|x| *x == &b'G'|| *x == &b'C')
             .count();
         let gc_ratio = (gc_count as f64 / len as f64 * 100.0).round() as u64;
         *gc_hash.entry(gc_ratio).or_insert(0u64) += 1;

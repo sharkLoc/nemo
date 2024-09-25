@@ -39,9 +39,8 @@ pub fn get_cmd(args: Args) -> String {
     opt.push(String::from("--html"));
     opt.push(html);
 
-    let input = if let Some(v) = cmd.input { format!("{}",v.to_str().unwrap()) } else { String::from("-") };
+    let input = if let Some(v) = cmd.input { v.to_str().unwrap().to_string() } else { String::from("-") };
     opt.push(input);
 
-    let cmd_line = opt.join("  ");
-    cmd_line
+    opt.join("  ")
 }
