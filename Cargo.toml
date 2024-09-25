@@ -1,0 +1,26 @@
+[package]
+name = "nemo"
+version = "0.1.0"
+edition = "2021"
+authors = ["sharkLoc <mmtinfo@163.com>"]
+rust-version = "1.77.2"
+homepage = "https://github.com/sharkLoc/nemo"
+repository = "https://github.com/sharkLoc/nemo"
+description = "nemo: a tool for quality overview of long-read sequencing data"
+keywords = ["fastq", "long-read","bio", "hts"]
+readme = "README.md"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+askama = "0.12.1"
+atty = "0.2.14"
+bio = "2.0.3"
+bzip2 = "0.4.4"
+chrono = "0.4.38"
+clap = { version = "4.4.7", features = ["derive", "wrap_help"] }
+flate2 = "1.0.33"
+log = "0.4.22"
+plotly = "0.10.0"
+thiserror = "1.0.64"
+xz2 = "0.1.7"

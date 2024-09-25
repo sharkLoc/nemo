@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>report</title>
+
+    <script src="https://cdn.plot.ly/plotly-2.12.1.min.js" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+
+    <style>
+        header {
+            height: 80px;
+            border: #a479bf solid 2px;
+        }
+        header #left {
+            font-size: 40px;
+            display: inline;
+        }
+        header #right {
+            float: right;
+            color: grey;
+        }
+        h2 {
+            text-align: left;
+            margin-left: 10px;
+            background-color: grey;
+        }
+        aside {
+            height: 100%;
+            width: 20%;
+            border: #a479bf solid 1px;
+            float: left;
+            position: relative;
+            left: 0;
+            top: 20px;
+        }
+        .iterms {
+            list-style: none;
+            text-align: left;
+            padding: 0;
+        }
+        .item a {
+            display: block;
+            margin: 5px;
+            color: black;
+        }
+        .item a:hover, .item a:focus {
+            background: #a479bf;
+            color: #FFF;
+        }
+        main {
+            height: 100%;
+            margin-left: 0;
+            display: block;
+            overflow: auto;
+            /* background-color: rgb(220, 213, 207); */
+            text-align: center;
+        }
+        .MM {
+            display: inline-block;
+            margin: 1%;
+        }
+        footer {
+            /* background-color: aqua; */
+            height: 40px;
+            border: #a479bf solid 2px;
+            line-height: 40px;
+        }
+    
+    </style>
+</head>
+<body>
+    <header>
+        <div id="left">Nemo Report Page</div>
+        <div id="right"> 
+            version: 0.1.0<br>
+            report date: 2024-09-25 14:33:37<br>
+        </div>
+    </header>
+    <div class="container"></div>
+        <div class="side">
+            <aside>
+                <ul class="iterms">
+                    <li class="item"><a href="#Basic_Statistics">Basic Statistics</a></li>
+                    <li class="item"><a href="#Read_Length">Read Length Count</a></li>
+                    <li class="item"><a href="#Read_GC_Content">Read GC Content</a></li>
+                    <li class="item"><a href="#">todo</a></li>
+                    <li class="item"><a href="#">todo</a></li>
+                    <li class="item"><a href="#">todo</a></li>
+                    <li class="item"><a href="#">todo</a></li>
+                    <li class="item"><a href="#">todo</a></li>
+                    <li class="item"><a href="#">todo</a></li>
+                    <li class="item"><a href="#">todo</a></li>
+                    <li class="item"><a href="#">todo</a></li>
+              
+                  </ul>
+            </aside>
+        </div>
+        
+        <div class="main">
+            <main>
+                <h2>Basic Statistics</h2>
+                <div class="MM">
+                    <div id="Basic_Statistics" class="plotly-graph-div" style="height:100%; width:100%;"></div>
+<script type="text/javascript">
+    Plotly.newPlot("Basic_Statistics", {"data":[{"type":"table","header":{"values":["Measure","Value"],"align":"left","fill":{"color":"skyblue"},"font":{"size":16}},"cells":{"values":[["File name","Total reads count","Total bases count","Min read length","Max read length","Average read length","GC Content(%)","Base A count","Base T count","Base G count","Base C count","Base N count","\u003c1kb read info","\u003c2kb read info","\u003c5kb read info","\u003c10kb read info","\u003c20kb read info","\u003c50kb read info"],["longRreads.fq.gz","90","998386","272","43042","11093.18","51.09","245094","243222","257027","253043","0","5:(5.56%)","12:(13.33%)","28:(31.11%)","43:(47.78%)","78:(86.67%)","90:(100.00%)"]],"align":"left","fill":{"color":"whitesmoke"}}}],"layout":{"title":{"text":"\u003cb\u003eSequencing summary\u003c/b\u003e"},"autosize":false,"width":600,"height":650},"config":{}});
+</script>
+                </div>
+                <h2>Read Length Count</h2>
+                <div class="MM">
+                    <div id="Read_Length" class="plotly-graph-div" style="height:100%; width:100%;"></div>
+<script type="text/javascript">
+    Plotly.newPlot("Read_Length", {"data":[{"type":"histogram","x":[272,397,442,533,580,1001,1341,1644,1657,1717,1857,1928,2516,2994,3190,3705,3765,3892,4057,4066,4365,4388,4413,4659,4695,4715,4893,4904,5081,5286,5504,6548,7280,7927,8184,8628,9082,9390,9439,9518,9599,9664,9680,10154,10210,10257,10613,10790,10836,10837,11019,11513,11795,12181,12523,12974,13118,13297,13900,14174,14318,14383,14742,15035,15103,15177,15199,15294,15351,15856,16116,16946,17005,17475,17587,17604,18029,18408,20404,20450,21373,21397,21689,23910,24293,24575,25346,30504,32188,43042],"y":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]}],"layout":{"title":{"text":"\u003cb\u003eRead length distribution\u003c/b\u003e"},"autosize":false,"width":800,"height":600,"xaxis":{"title":{"text":"Read length"}},"yaxis":{"title":{"text":"Read count"}}},"config":{}});
+</script>
+                </div>
+                <h2>Read GC Content</h2>
+                <div class="MM">
+                    <div id="Read_GC_Content" class="plotly-graph-div" style="height:100%; width:100%;"></div>
+<script type="text/javascript">
+    Plotly.newPlot("Read_GC_Content", {"data":[{"type":"scatter","mode":"lines","x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100],"y":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.11,0.0,0.0,0.0,3.33,3.33,4.44,10.0,14.44,32.22,17.78,7.78,3.33,1.11,0.0,0.0,0.0,1.11,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]}],"layout":{"title":{"text":"\u003cb\u003eRead GC content\u003c/b\u003e"},"autosize":false,"width":800,"height":600,"xaxis":{"title":{"text":"Per-Read gc content"}},"yaxis":{"title":{"text":"Proportion"}}},"config":{}});
+</script>
+                </div>
+            </main>
+        </div>
+
+    </div>
+    
+
+    <footer>CMD:  ./nemo  --html  report.html  example/longRreads.fq.gz </footer>
+</body>
+</html>
