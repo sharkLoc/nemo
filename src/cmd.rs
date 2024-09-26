@@ -28,11 +28,15 @@ pub struct Args {
     #[arg(short='r',long="html", value_name="FILE", default_value_t = String::from("report.html"))]
     pub html: String,
 
+    /// Specify the output json file name
+    #[arg(short='o',long="json", value_name="FILE", default_value_t = String::from("report.json"))]
+    pub json: String,
+
     /// If file name specified, write log message to this file, or write to stderr
     #[arg(long = "log", global = true, value_name = "FILE")]
     pub logfile: Option<String>,
 
-    /// Set compression level 1 (compress faster) - 9 (compress better) for gzip/bzip2/xz output file
+    /// Set compression level 1 (compress faster) - 9 (compress better) for gzip/bzip2/xz output file, just work with option -o/--json
     #[arg(long = "compress-level", default_value_t = 6, global = true, value_parser = value_parser!(u32).range(1..=9), 
         value_name = "INT"
     )]
@@ -66,8 +70,17 @@ pub fn get_cmd(args: Args) -> String {
     opt.push(String::from("--html"));
     opt.push(html);
 
+    let json = cmd.json;
+    opt.push(String::from("--json"));
+    opt.push(json);
+
     let input = if let Some(v) = cmd.input { v.to_str().unwrap().to_string() } else { String::from("-") };
     opt.push(input);
+
+    if let Some(log) = cmd.logfile {
+        opt.push(String::from("--log"));
+        opt.push(log);
+    }
 
     if cmd.quiet { 
         opt.push(String::from("--quit")); 
@@ -82,6 +95,7 @@ pub fn get_cmd(args: Args) -> String {
           };
           opt.push(verbose);
     }
+
 
     opt.join("  ")
 }

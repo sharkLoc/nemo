@@ -172,8 +172,8 @@ fn gc_plot(
     plot.add_trace(line);
     plot.set_layout(Layout::new()
         .title("<b>Read GC content</b>")
-        .y_axis(Axis::new().title("Proportion"))
-        .x_axis(Axis::new().title("Per-Read gc content"))
+        .y_axis(Axis::new().title("Proportion(%)"))
+        .x_axis(Axis::new().title("Per-Read gc content(%)"))
         .auto_size(false)
         .width(800)
         .height(600)

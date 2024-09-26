@@ -1,8 +1,9 @@
 use std::{collections::HashMap, path::PathBuf};
-use crate::{error::NemoError, utils::file_reader};
+use crate::{error::NemoError, utils::{file_reader, file_writer}};
 use bio::io::fastq::Reader;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug,Clone)]
+#[derive(Debug,Clone, Serialize,Deserialize)]
 pub struct Rec {
     pub file_name: String,
     pub nt_a: usize,
@@ -50,6 +51,8 @@ impl Rec {
 
 pub fn statfq(
     file: Option<PathBuf>,
+    json_file: Option<&str>,
+    compression_level: u32, 
 ) -> Result<(Rec, HashMap<usize, usize>, HashMap<u64,u64>), NemoError> {
     
     let file_name = file.clone();
@@ -107,6 +110,11 @@ pub fn statfq(
 
     info.min_len = min_len.unwrap();
     info.update();
+
+    let str_json = serde_json::to_string_pretty(&info)?;
+    let mut writer = file_writer(json_file, compression_level)?;
+    writer.write_all(str_json.as_bytes())?;
+    writer.flush()?;
 
     Ok((info,length_hash, gc_hash))
 }

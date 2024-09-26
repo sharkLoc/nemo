@@ -7,7 +7,7 @@ mod report;
 
 use clap::Parser;
 use log::info;
-use cmd::get_cmd;
+use cmd::{get_cmd, VERSION};
 use error::NemoError;
 use process::statfq;
 use report::summary;
@@ -18,9 +18,11 @@ fn main() -> Result<(), NemoError>{
     let cmd = cmd::Args::parse();
     let cmd_txt = get_cmd(cmd.clone());
     loger::logger(cmd.verbose, cmd.logfile, cmd.quiet)?;
-    let start = Instant::now();
 
-    let (content, length_hash, gc_hash )= statfq(cmd.input)?;
+    let start = Instant::now();
+    info!("nemo version: {}",VERSION);
+    
+    let (content, length_hash, gc_hash )= statfq(cmd.input, Some(&cmd.json), cmd.compression_level)?;
     summary(content, length_hash, gc_hash, &cmd.html, cmd_txt)?;
 
     info!("time elapsed is: {:?}", start.elapsed());

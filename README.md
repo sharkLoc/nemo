@@ -41,8 +41,9 @@ Arguments:
 
 Options:
   -r, --html <FILE>           Specify the output HTML report file name [default: report.html]
+  -o, --json <FILE>           Specify the output json file name [default: report.json]
       --log <FILE>            If file name specified, write log message to this file, or write to stderr
-      --compress-level <INT>  Set compression level 1 (compress faster) - 9 (compress better) for gzip/bzip2/xz output file [default: 6]
+      --compress-level <INT>  Set compression level 1 (compress faster) - 9 (compress better) for gzip/bzip2/xz output file, just work with option -o/--json [default: 6]
   -v, --verbosity...          Control verbosity of logging, [-v: Error, -vv: Warn, -vvv: Info, -vvvv: Debug, -vvvvv: Trace, defalut: Debug]
   -q, --quiet                 Be quiet and do not show any extra information
   -h, --help                  prints help information

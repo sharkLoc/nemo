@@ -933,6 +933,8 @@ dependencies = [
  "flate2",
  "log",
  "plotly",
+ "serde",
+ "serde_json",
  "thiserror",
  "xz2",
 ]
