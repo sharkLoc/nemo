@@ -2,7 +2,7 @@ use std::{collections::HashMap, path::PathBuf};
 use crate::{error::NemoError, utils::file_reader};
 use bio::io::fastq::Reader;
 
-#[derive(Debug)]
+#[derive(Debug,Clone)]
 pub struct Rec {
     pub file_name: String,
     pub nt_a: usize,

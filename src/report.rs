@@ -10,7 +10,7 @@ use crate::error::NemoError;
 use crate::process::Rec;
 use crate::utils::file_writer;
 use crate::cmd::VERSION;
-use std::collections::HashMap;
+use std::{collections::HashMap, vec};
 use chrono::{DateTime,Local};
 
 #[derive(Template)] 
@@ -21,6 +21,7 @@ struct Report {
     basic_statistics: String,
     read_length_hist: String,
     per_read_gc: String,
+    cumu_base: String,
     cmd: String,
 }
 
@@ -33,8 +34,8 @@ pub fn summary(
     cmd_txt: String, 
 ) -> Result<(), NemoError> {
     
-    let tb1_div = basic_statistics(data)?;
-    let length_plot_div = length_plot(length_hash)?;
+    let tb1_div = basic_statistics(data.clone())?;
+    let (cumu_plot_div, length_plot_div) = length_plot(length_hash, data.bases)?;
     let gc_plot_div = gc_plot(gc_hash)?;
 
     let mut writer = file_writer(Some(html), 0u32)?;
@@ -46,6 +47,7 @@ pub fn summary(
         basic_statistics: tb1_div, 
         read_length_hist: length_plot_div, 
         per_read_gc: gc_plot_div,
+        cumu_base: cumu_plot_div,
         cmd: cmd_txt,
     };
     writer.write_all(report.to_string().as_bytes())?;
@@ -99,14 +101,40 @@ fn basic_statistics(
 
 
 fn length_plot(
-    length_hash: HashMap<usize,usize>,
-) -> Result<String, NemoError> {
+    length_hash: HashMap<usize,usize>,  
+    total_base: usize,
+) -> Result<(String,String), NemoError> {
     let mut pairs : Vec<(&usize, &usize)> = length_hash.iter().collect();  
     pairs.sort_by_key(|x| x.0);  //  eq =>  tmp.sort_by(|x,y| x.0.cmp(y.0));
     
+    // for cumulativa plot
+    let mut vecx = vec![0];
+    let mut vecy = vec![0.0];
+    let mut cumulative_sum = 0.0;
+    for (&x,&y) in pairs.iter() {
+        vecx.push(x);
+        cumulative_sum += y as f64 * x as f64;
+        vecy.push( cumulative_sum / total_base as f64 * 100.);
+    }
+
+    let cumu = Scatter::new(vecx, vecy)
+        .mode(Mode::Lines);
+    let mut cumu_line = Plot::new();
+    cumu_line.add_trace(cumu);
+    cumu_line.set_layout(Layout::new()
+        .title("<b>Cumulative fraction of bases</b>")
+        .x_axis(Axis::new().title("Minimum read length(bp)"))
+        .y_axis(Axis::new().title("Proportion(%)"))
+        .auto_size(false)
+        .width(800)
+        .height(600)
+    );
+    let plot_div0 = cumu_line.to_inline_html(Some("Cumulative_Base"));
+
+    // for length plot
     let mut datax = vec![];
     let mut datay = vec![];  
-    for (&x,&y) in pairs {
+    for (&x,&y) in pairs.iter() {
         datax.push(x);
         datay.push(y);
     }
@@ -123,7 +151,7 @@ fn length_plot(
         .height(600)
     );
     let plot_div = plot.to_inline_html(Some("Read_Length"));
-    Ok(plot_div)
+    Ok((plot_div0, plot_div))
 }
 
 fn gc_plot(
