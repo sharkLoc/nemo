@@ -1,133 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>report</title>
+    <title>nemo report</title>
 
     <script src="https://cdn.plot.ly/plotly-2.12.1.min.js" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
 
     <style>
-        header {
-            height: 80px;
-            border: #a479bf solid 2px;
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
-        header #left {
-            font-size: 40px;
-            display: inline;
+
+        .header,
+        .footer {
+            background-color: #f2f2f2;
+            padding: 0px;
+            width: 100%;
+            text-align: center;
+            display: inline-block;
         }
-        header #right {
+
+        .header #info {
             float: right;
-            color: grey;
+            padding-right: 10px;
         }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            width: 200px;
+            height: 80%;
+            background-color: #333;
+            overflow: auto;
+        }
+
+        .main-content {
+            margin-left: 200px;
+            /* Same as sidebar width */
+            padding: 0px 10px;
+        }
+        .main-content .section {
+            text-align: center;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        .footer {
+            position: relative;
+            bottom: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .image-container {
+            /* text-align: center; */
+            margin: auto;
+            margin-top: 20px;
+        }
+
         h2 {
             text-align: left;
             margin-left: 10px;
-            background-color: grey;
+            padding: 5px;
+            background-color: gray;
         }
-        aside {
-            height: 100%;
-            width: 20%;
-            border: #a479bf solid 1px;
-            float: left;
-            position: relative;
-            left: 0;
-            top: 20px;
+
+        .section {
+            margin-top: 60px;
+            /* Adjust this value to prevent jumping effect */
         }
-        .iterms {
-            list-style: none;
-            text-align: left;
-            padding: 0;
-        }
-        .item a {
-            display: block;
-            margin: 5px;
-            color: black;
-        }
-        .item a:hover, .item a:focus {
-            background: #a479bf;
-            color: #FFF;
-        }
-        main {
-            height: 100%;
-            margin-left: 0;
-            display: block;
-            overflow: auto;
-            /* background-color: rgb(220, 213, 207); */
-            text-align: center;
-        }
-        .MM {
-            display: inline-block;
-            margin: 1%;
-        }
-        footer {
-            /* background-color: aqua; */
-            height: 40px;
-            border: #a479bf solid 2px;
-            line-height: 40px;
-        }
-    
     </style>
 </head>
+
 <body>
-    <header>
-        <div id="left">
-            <a href="https://github.com/sharkLoc/nemo" style="text-decoration: none;">Nemo Report Page</a>
-        </div>
-        <div id="right"> 
+
+    <div class="header">
+        <a href="https://github.com/sharkLoc/nemo" style="text-decoration: none;">
+            <h1>Nemo Report Page</h1>
+        </a>
+        <div id="info">
             version: {{version}}<br>
-            report date: {{report_time}}<br>
+            report date: {{report_time}}
         </div>
-    </header>
-    <div class="container"></div>
-        <div class="side">
-            <aside>
-                <ul class="iterms">
-                    <li class="item"><a href="#Basic_Statistics">Basic Statistics</a></li>
-                    <li class="item"><a href="#Read_Length">Read Length Count</a></li>
-                    <li class="item"><a href="#Read_GC_Content">Read GC Content</a></li>
-                    <li class="item"><a href="#Cumulative_Base">Cumulative Fraction Of Bases</a></li>
-                    <li class="item"><a href="#">todo</a></li>
-                    <li class="item"><a href="#">todo</a></li>
-                    <li class="item"><a href="#">todo</a></li>
-                    <li class="item"><a href="#">todo</a></li>
-                    <li class="item"><a href="#">todo</a></li>
-                    <li class="item"><a href="#">todo</a></li>
-                    <li class="item"><a href="#">todo</a></li>
-              
-                  </ul>
-            </aside>
-        </div>
-        
-        <div class="main">
-            <main>
-                <h2>Basic Statistics</h2>
-                <div class="MM">
-                    {{basic_statistics}}
-                </div>
-
-                <h2>Read Length Count</h2>
-                <div class="MM">
-                    {{read_length_hist}}
-                </div>
-                
-                <h2>Read GC Content</h2>
-                <div class="MM">
-                    {{per_read_gc}}
-                </div>
-
-                <h2>Cumulative fraction of bases</h2>
-                <div class="MM">
-                    {{cumu_base}}
-                </div>
-
-            </main>
-        </div>
-
     </div>
-    
 
-    <footer>CMD:  {{cmd}} </footer>
+    <div class="sidebar">
+        <a href="#Basic_Statistics">Basic Statistics</a>
+        <a href="#Read_Length">Read Length Count</a>
+        <a href="#Read_GC_Content">Read GC Content</a>
+        <a href="#Cumulative_Base">Cumulative Fraction Of Bases</a>
+        <a href="#section5">todo 1</a>
+        <a href="#section6">todo 2</a>
+        <a href="#section7">todo 3</a>
+        <a href="#section8">todo 4</a>
+        <!-- Add more links as needed -->
+    </div>
+
+    <div class="main-content">
+        <h2>Basic Statistics</h2>
+        <!-- <p>This is the content for section 1.</p> -->
+        <div id="Basic_Statistics" class="section">
+            <div class="image-container">
+                {{basic_statistics}}
+            </div>
+        </div>
+
+        <h2>Read Length Count</h2>
+        <!-- <p>This is the content for section 2.</p> -->
+        <div id="Read_Length" class="section">
+            <div class="image-container">
+                {{read_length_hist}}
+            </div>
+        </div>
+
+        <h2>Read GC Content</h2>
+        <!-- <p>This is the content for section 3.</p> -->
+        <div id="Read_GC_Content" class="section">
+            <div class="image-container">
+                {{per_read_gc}}
+            </div>
+        </div>
+
+        <h2>Cumulative fraction of bases</h2>
+        <!-- <p>This is the content for section 3.</p> -->
+        <div id="Cumulative_Base" class="section"></div>
+            <div class="image-container">
+                {{cumu_base}}
+            </div>
+        </div>
+
+        <!-- Add more sections as needed -->
+    </div>
+
+    <div class="footer">
+        <p>CMD:  {{cmd}}</p>
+    </div>
+
 </body>
+
 </html>
