@@ -1,9 +1,5 @@
 use plotly::{
-    Histogram, Layout, Plot, Scatter,
-    common::{Font,Mode},
-    layout::Axis,
-    color::NamedColor,
-    traces::table::{Cells, Header, Table, Fill}
+    color::NamedColor, common::{Font,Mode}, layout::Axis, traces::table::{Cells, Fill, Header, Table}, Histogram, Layout, Plot, Scatter
 };
 use askama::Template;
 use crate::error::NemoError;
@@ -22,6 +18,7 @@ struct Report {
     read_length_hist: String,
     per_read_gc: String,
     cumu_base: String,
+    relative_pos_read: String,
     cmd: String,
 }
 
@@ -30,6 +27,7 @@ pub fn summary(
     data: Rec,
     length_hash: HashMap<usize,usize>,
     gc_hash: HashMap<u64,u64>,
+    qual_relative_vec: Vec<Vec<u8>>,
     html: &str,
     cmd_txt: String, 
 ) -> Result<(), NemoError> {
@@ -37,6 +35,7 @@ pub fn summary(
     let tb1_div = basic_statistics(data.clone())?;
     let (cumu_plot_div, length_plot_div) = length_plot(length_hash, data.bases)?;
     let gc_plot_div = gc_plot(gc_hash)?;
+    let qual_relative_div = relavte_qual(qual_relative_vec)?;
 
     let mut writer = file_writer(Some(html), 0u32)?;
     let now: DateTime<Local> = Local::now();
@@ -48,6 +47,7 @@ pub fn summary(
         read_length_hist: length_plot_div, 
         per_read_gc: gc_plot_div,
         cumu_base: cumu_plot_div,
+        relative_pos_read: qual_relative_div,
         cmd: cmd_txt,
     };
     writer.write_all(report.to_string().as_bytes())?;
@@ -183,3 +183,52 @@ fn gc_plot(
     Ok(plot_div)
 }
 
+fn relavte_qual(
+    data: Vec<Vec<u8>>,
+) -> Result<String, NemoError> {
+    let mut total_error: Vec<f64> = vec![0.;100];
+    let read_count = data.len() as f64;
+    // let mut qual_max: Vec<u8> =  vec![0; 100];
+    // let mut qual_min: Vec<u8> = vec![255;100];
+    for row in data.iter() {
+        for (idx,qual) in row.iter().enumerate() {
+            total_error[idx] += qual_error(qual);
+            // if *qual > qual_max[idx] {
+            //     qual_max[idx] = *qual - 33 ;
+            // }
+            // if *qual < qual_min[idx] {
+            //     qual_min[idx] = *qual - 33;
+            // }
+        }
+    }
+    let mut qual_mean = total_error.iter().map(|e| -10.0 * (e / read_count).log10()).collect::<Vec<f64>>();
+    qual_mean.insert(0, 0.0);
+    let data_x = (0..=100).into_iter().collect::<Vec<u32>>();
+    // qual_max.insert(0, 0);
+    // qual_min.insert(0, 0);
+
+
+    let mut plot = Plot::new();
+    let relative_plot = Scatter::new(data_x.clone(), qual_mean).mode(Mode::Lines).name("Mean");
+    plot.add_trace(relative_plot);
+    // let q_max = Scatter::new(data_x.clone(), qual_max).mode(Mode::Lines).name("MAX");
+    // plot.add_trace(q_max);
+    // let q_min = Scatter::new(data_x, qual_min).mode(Mode::Lines).name("MIN");
+    // plot.add_trace(q_min);
+
+    plot.set_layout(Layout::new()
+        .title("<b>Base quality in relative position</b>")
+        .x_axis(Axis::new().title("Relative position in read(%)"))
+        .y_axis(Axis::new().title("Mean base quality"))
+        .auto_size(false)
+        .width(800)
+        .height(600)
+    );
+    let plot_div = plot.to_inline_html(Some("Relative_pos_in_read"));
+   
+    Ok(plot_div)
+}
+
+fn qual_error(qual: &u8) -> f64 {
+    10.0f64.powf((qual - 33) as f64 / -10.0)
+}

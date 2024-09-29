@@ -22,8 +22,8 @@ fn main() -> Result<(), NemoError>{
     let start = Instant::now();
     info!("nemo version: {}",VERSION);
     
-    let (content, length_hash, gc_hash )= statfq(cmd.input, Some(&cmd.json), cmd.compression_level)?;
-    summary(content, length_hash, gc_hash, &cmd.html, cmd_txt)?;
+    let (content, length_hash, gc_hash, qual_relative_vec)= statfq(cmd.input, Some(&cmd.json), cmd.compression_level)?;
+    summary(content, length_hash, gc_hash, qual_relative_vec, &cmd.html, cmd_txt)?;
 
     info!("time elapsed is: {:?}", start.elapsed());
     Ok(())

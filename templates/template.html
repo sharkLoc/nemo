@@ -43,7 +43,8 @@
             /* Same as sidebar width */
             padding: 0px 10px;
         }
-        .main-content .section {
+
+        .main-content .image-container {
             text-align: center;
         }
 
@@ -68,7 +69,7 @@
         .image-container {
             /* text-align: center; */
             margin: auto;
-            margin-top: 20px;
+            margin-top: 40px;
         }
 
         h2 {
@@ -76,11 +77,6 @@
             margin-left: 10px;
             padding: 5px;
             background-color: gray;
-        }
-
-        .section {
-            margin-top: 60px;
-            /* Adjust this value to prevent jumping effect */
         }
     </style>
 </head>
@@ -102,7 +98,7 @@
         <a href="#Read_Length">Read Length Count</a>
         <a href="#Read_GC_Content">Read GC Content</a>
         <a href="#Cumulative_Base">Cumulative Fraction Of Bases</a>
-        <a href="#section5">todo 1</a>
+        <a href="#Relative_pos_in_read">Base Quality In Relative Position</a>
         <a href="#section6">todo 2</a>
         <a href="#section7">todo 3</a>
         <a href="#section8">todo 4</a>
@@ -110,43 +106,36 @@
     </div>
 
     <div class="main-content">
-        <h2>Basic Statistics</h2>
-        <!-- <p>This is the content for section 1.</p> -->
-        <div id="Basic_Statistics" class="section">
-            <div class="image-container">
-                {{basic_statistics}}
-            </div>
+        <div class="image-container">
+            <h2>Basic Statistics</h2>
+            {{basic_statistics}}
         </div>
 
-        <h2>Read Length Count</h2>
-        <!-- <p>This is the content for section 2.</p> -->
-        <div id="Read_Length" class="section">
-            <div class="image-container">
-                {{read_length_hist}}
-            </div>
+        <div class="image-container">
+            <h2>Read Length Count</h2>
+            {{read_length_hist}}
         </div>
 
-        <h2>Read GC Content</h2>
-        <!-- <p>This is the content for section 3.</p> -->
-        <div id="Read_GC_Content" class="section">
-            <div class="image-container">
-                {{per_read_gc}}
-            </div>
+        <div class="image-container">
+            <h2>Read GC Content</h2>
+            {{per_read_gc}}
         </div>
 
-        <h2>Cumulative fraction of bases</h2>
-        <!-- <p>This is the content for section 3.</p> -->
-        <div id="Cumulative_Base" class="section"></div>
-            <div class="image-container">
-                {{cumu_base}}
-            </div>
+        <div class="image-container">
+            <h2>Cumulative fraction of bases</h2>
+            {{cumu_base}}
+        </div>
+
+        <div class="image-container">
+            <h2>Base Quality In Relative Position</h2>
+            {{relative_pos_read}}
         </div>
 
         <!-- Add more sections as needed -->
     </div>
 
     <div class="footer">
-        <p>CMD:  {{cmd}}</p>
+        <p>CMD: {{cmd}}</p>
     </div>
 
 </body>

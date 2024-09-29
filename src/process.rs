@@ -2,6 +2,7 @@ use std::{collections::HashMap, path::PathBuf};
 use crate::{error::NemoError, utils::{file_reader, file_writer}};
 use bio::io::fastq::Reader;
 use serde::{Deserialize, Serialize};
+use log::error;
 
 #[derive(Debug,Clone, Serialize,Deserialize)]
 pub struct Rec {
@@ -53,7 +54,7 @@ pub fn statfq(
     file: Option<PathBuf>,
     json_file: Option<&str>,
     compression_level: u32, 
-) -> Result<(Rec, HashMap<usize, usize>, HashMap<u64,u64>), NemoError> {
+) -> Result<(Rec, HashMap<usize, usize>, HashMap<u64,u64>, Vec<Vec<u8>>), NemoError> {
     
     let file_name = file.clone();
     let mut info = Rec::new();
@@ -63,6 +64,7 @@ pub fn statfq(
     }
     let mut length_hash: HashMap<usize, usize> = HashMap::new();
     let mut gc_hash: HashMap<u64,u64> = HashMap::new();
+    let mut qual_relative_vec: Vec<Vec<u8>> = vec![]; 
 
     let reader = Reader::new(file_reader(file)?);
     for rec in reader.records().map_while(Result::ok) {
@@ -103,9 +105,21 @@ pub fn statfq(
                 b'G' => info.nt_g += 1,
                 b'C' => info.nt_c += 1,
                 b'N' => info.nt_n += 1,
-                _ => eprintln!("error base in read: {}",rec.id())
+                _ => error!("error base in read: {}",rec.id())
             }
         }
+
+        let mut qual_relative_pos = vec![];
+        for i in 1usize..=100 {
+            let idx = if i == 100 { len -1 } else {
+                let ret = (len as f64 * (i as f64/ 100 as f64) ) as usize;
+                if ret == 0 { ret } else {ret -1 };
+                ret
+            };
+            qual_relative_pos.push(rec.qual()[idx]);
+        }
+        qual_relative_vec.push(qual_relative_pos);
+        
     }
 
     info.min_len = min_len.unwrap();
@@ -116,6 +130,6 @@ pub fn statfq(
     writer.write_all(str_json.as_bytes())?;
     writer.flush()?;
 
-    Ok((info,length_hash, gc_hash))
+    Ok((info,length_hash, gc_hash, qual_relative_vec))
 }
 
