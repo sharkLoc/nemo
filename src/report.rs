@@ -203,7 +203,7 @@ fn relavte_qual(
     }
     let mut qual_mean = total_error.iter().map(|e| -10.0 * (e / read_count).log10()).collect::<Vec<f64>>();
     qual_mean.insert(0, 0.0);
-    let data_x = (0..=100).into_iter().collect::<Vec<u32>>();
+    let data_x = (0..=100).collect::<Vec<u32>>();
     // qual_max.insert(0, 0);
     // qual_min.insert(0, 0);
 

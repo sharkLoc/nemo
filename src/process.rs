@@ -112,7 +112,7 @@ pub fn statfq(
         let mut qual_relative_pos = vec![];
         for i in 1usize..=100 {
             let idx = if i == 100 { len -1 } else {
-                let ret = (len as f64 * (i as f64/ 100 as f64) ) as usize;
+                let ret = (len as f64 * (i as f64/ 100_f64) ) as usize;
                 if ret == 0 { ret } else {ret -1 };
                 ret
             };
