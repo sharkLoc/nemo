@@ -11,9 +11,6 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 ##### step2:  on linux or windows
 ```bash
-cargo install nemo
-# or
-
 git clone https://github.com/sharkLoc/nemo.git
 cd nemo
 cargo b --release
